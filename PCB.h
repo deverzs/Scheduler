@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+using namespace std;
 
 /*
 Jason Luu and Zsuzsanna Dianovics
@@ -22,16 +24,20 @@ public:
     // The unique process ID
 	unsigned int id;
     // The priority of a process valued between 1-50. Larger number represents higher priority
-	unsigned int priority;
+	int priority;
 	// The current state of the process.
 	// A process in the ReadyQueue should be in READY state
 	ProcState state;
+	//The name of the process
+	string name;
+	//The burst length of the process
+	int burst;
 	//Tracking how often object removed from queue
 	int removed;
 	//Tracking how often added to the queue
 	int added;
 	//constructor
-	PCB(int,int);
+	PCB(string,int,int);
 	
 };
 

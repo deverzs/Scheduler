@@ -9,9 +9,10 @@ Implementation file: PCB.cpp
 	@params  id: int the id of the process
 			 priority: int the priority of the process
 */
-PCB::PCB(int id, int priority){
-  this->id = id;
+PCB::PCB(string name, int priority, int burst){
+  this->name = name;
   this->priority = priority;
+  this->burst = burst;
   state = ProcState::NEW;
 }
 
