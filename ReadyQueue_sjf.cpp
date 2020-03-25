@@ -1,9 +1,5 @@
 #include <iostream>
-<<<<<<< HEAD:ReadyQueue_sjf.cpp
 #include "ReadyQueue_sjf.h"
-=======
-#include "ReadyQueue_priority.h"
->>>>>>> priority_test:ReadyQueue_priority.cpp
 
 /*
 Jason Luu and Zsuzsanna Dianovics
@@ -110,15 +106,9 @@ void ReadyQueue::trickleup(){
   int lastElem = count-1; 			//the last elem location
   bool didSwap = true; 				//local variable to determine whether we did swap or not.
   while (lastElem > 0 && didSwap == true){
-<<<<<<< HEAD:ReadyQueue_sjf.cpp
     if(Q[lastElem]->burst < Q[getParent(lastElem)]->burst){
       swap(getParent(lastElem),lastElem);
       if(Q[lastElem]->burst == Q[lastElem - 1]->burst){
-=======
-    if(Q[lastElem]->priority > Q[getParent(lastElem)]->priority){
-      swap(getParent(lastElem),lastElem);
-      if(Q[lastElem]->priority == Q[lastElem - 1]->priority){
->>>>>>> priority_test:ReadyQueue_priority.cpp
         swap(getParent(lastElem)+1,lastElem);
       }
       // if(Q[getParent(lastElem)]->priority == Q[getParent(lastElem)+1]->priority){
@@ -176,13 +166,8 @@ void ReadyQueue::reheapify()
   X = 0;
   while (X < count - 1 && didSwap == true)
     {
-<<<<<<< HEAD:ReadyQueue_sjf.cpp
       Y = getSmallerchild(X);
       if (Y != -1 && (Q[X]->burst >= Q[Y]->burst))
-=======
-      Y = getLargerchild(X);
-      if (Y != -1 && (Q[X]->priority <= Q[Y]->priority))
->>>>>>> priority_test:ReadyQueue_priority.cpp
         {
           swap(Y,X);
           X = Y;
@@ -206,11 +191,7 @@ int ReadyQueue::getSmallerchild(int i)
     {
       return LC;
     }
-<<<<<<< HEAD:ReadyQueue_sjf.cpp
   else if(Q[LC]->burst == Q[RC]->burst)
-=======
-  else if(Q[LC]->priority == Q[RC]->priority)
->>>>>>> priority_test:ReadyQueue_priority.cpp
   {
     //determines which child (left or right) to return when they are the same priority based on the order of FCFS. 
     if(stoi(Q[LC]->name.substr(1)) < stoi(Q[RC]->name.substr(1))){

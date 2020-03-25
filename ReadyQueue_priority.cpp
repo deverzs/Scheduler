@@ -187,7 +187,7 @@ int ReadyQueue::getLargerchild(int i)
   int RC = 2*i + 2; //right child is in the location of 2*i + 2 in Q
   if (LC > count -1 && RC > count -1)
     {return -1;}
-  if (Q[LC]->burst < Q[RC]->burst)
+  if (Q[LC]->priority > Q[RC]->priority)
     {
       return LC;
     }

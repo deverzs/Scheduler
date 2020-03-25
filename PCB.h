@@ -56,6 +56,6 @@ class PCBTable {
 	int getSize(); //return the size of PCB table
 	void add(PCB*); //add the new process into PCB table
 	void display(); //display the contents of the PCB table 
-	void display(); //display the contents of the PCB table  
+	
   
 };
