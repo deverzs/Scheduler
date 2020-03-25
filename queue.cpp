@@ -52,10 +52,11 @@ void queue::add(el_t* newElem)
 // PURPOSE: if empty, throw Underflow
 // if not empty, removes the front element to give it back 
 // PARAMETER: provide a holder (removedElem) for the element removed (pass by ref)
-void queue::remove(el_t& removedElem)
+el_t* queue::remove()
 {
+  el_t* removedElem;
   if(isEmpty()) throw Underflow();
-    else {removedElem = *el[front]; front=(front+1)%MAX_SIZE; count--;}
+    else {removedElem = el[front]; front=(front+1)%MAX_SIZE; count--; return removedElem;}
 }
 
 // PURPOSE: if empty, throws an exception Underflow
@@ -104,7 +105,7 @@ void queue::goToBack()
   if(isEmpty()) throw Underflow();
   else if (count == 1){//does nothing
   }
-  else { add(&x); remove(x);}
+  else { add(&x); remove();}
 
 }
 

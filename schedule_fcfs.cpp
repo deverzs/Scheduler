@@ -93,14 +93,13 @@ int main(int argc, char *argv[])
 
     // TODO: Add your code to run the scheduler and print out statistics
     while(!tableQueue.isEmpty()){
-        tableQueue.remove(*running_process);
+        running_process = tableQueue.remove();
         running_process->turn_around_time = running_process->turn_around_time + running_process->burst + arrive_time + previous_finish_time;
         previous_finish_time = running_process->turn_around_time;
         running_process->waiting_time = running_process->turn_around_time - running_process->burst;
         //cout<<"--------------------"<<endl;
         sfinish_time = sfinish_time + running_process->turn_around_time;
         swaiting_time = swaiting_time + running_process->waiting_time;
-        table.update(running_process);
     }
     table.display();
     cout<<"Average turn-around time = " <<sfinish_time/counter<<endl;

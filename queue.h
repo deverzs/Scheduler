@@ -56,9 +56,8 @@ class queue
    void add(el_t*);
 
    // PURPOSE: if empty, throws an exception Underflow
-   // if not empty, removes the front element to give it back 
-   // PRAMETER: provide a holder for the element removed (pass by ref)
-   void remove(el_t&);
+   // if not empty, removes the front element and give it back.
+   el_t* remove();
 
    // PURPOSE: if empty, throws an exception Underflow
    // if not empty, give back the front element (but does not remove it)

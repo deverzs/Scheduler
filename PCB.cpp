@@ -21,17 +21,16 @@ PCB::PCB(string name, int priority, int burst, int turn_around_time, int waiting
   this->waiting_time = waiting_time;
   state = ProcState::NEW;
 }
+// get the size of the PCB table and return its size
 int PCBTable::getSize(){
   return count;
 }
+// to add the new process into the PCB table
 void PCBTable::add(PCB* process){
   PCBTable[count] = process;
   count++;
 }
-void PCBTable::update(PCB* process){
-  PCBTable[count] = process;
-  count--;
-}
+//to display the content of the PCB table
 void PCBTable::display(){
   for(int i = 0; i <count;i++){
       cout<<PCBTable[i]->name<<" turn-around time = ";
