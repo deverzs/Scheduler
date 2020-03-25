@@ -1,5 +1,5 @@
 #include <iostream>
-#include "ReadyQueue.h"
+#include "ReadyQueue_priority.h"
 
 /*
 Jason Luu and Zsuzsanna Dianovics

@@ -16,7 +16,7 @@
 #include <sstream>
 #include <string>
 #include "PCB.h"
-#include "ReadyQueue.h"
+#include "ReadyQueue_priority.h"
 
 
 using namespace std;
