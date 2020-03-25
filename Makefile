@@ -8,7 +8,7 @@ LIB = -lm			# linked libraries
 LDFLAGS = -L.			# link flags
 PROG = sjf fcfs rr priority		# target executables (output)
 SRCS = schedule_fcfs.cpp schedule_rr.cpp schedule_sjf.cpp schedule_priority.cpp \
-	PCB.cpp ReadyQueue_fcfs.cpp ReadyQueue_sjf.cpp # .c or .cpp source files.
+	PCB.cpp ReadyQueue_fcfs.cpp ReadyQueue_sjf.cpp ReadyQueue_priority.cpp # .c or .cpp source files.
 OBJ = $(SRCS:.cpp=.o) 	# object files for the target. Add more to this and next lines if there are more than one source files.
 
 all : $(PROG) depend
@@ -22,8 +22,8 @@ rr: schedule_rr.o PCB.o
 sjf: schedule_sjf.o PCB.o ReadyQueue_sjf.o
 	$(CC) -o sjf schedule_sjf.o PCB.o ReadyQueue_sjf.o $(LDFLAGS) $(LIB)
 
-priority: schedule_priority.o PCB.o
-	$(CC) -o priority schedule_priority.o PCB.o $(LDFLAGS) $(LIB)
+priority: schedule_priority.o PCB.o ReadyQueue_priority.o
+	$(CC) -o priority schedule_priority.o PCB.o ReadyQueue_priority.o $(LDFLAGS) $(LIB)
 
 .cpp.o:
 	$(CC) -c $(CFLAGS) $< -o $@

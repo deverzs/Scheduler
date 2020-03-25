@@ -1,9 +1,5 @@
 #include <iostream>
-<<<<<<< HEAD:ReadyQueue_sjf.cpp
-#include "ReadyQueue_sjf.h"
-=======
 #include "ReadyQueue_priority.h"
->>>>>>> priority_test:ReadyQueue_priority.cpp
 
 /*
 Jason Luu and Zsuzsanna Dianovics

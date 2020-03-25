@@ -50,8 +50,5 @@ private:
 	int count; 				//how many elements are in the ReadyQueue
 	int emptyQ;				//number of times queue is empty
 	
-<<<<<<< HEAD:ReadyQueue_sjf.h
 };
-=======
-};
->>>>>>> priority_test:ReadyQueue_priority.h
+
