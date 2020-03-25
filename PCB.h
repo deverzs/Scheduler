@@ -32,12 +32,16 @@ public:
 	string name;
 	//The burst length of the process
 	int burst;
+	//The turn-around time of the process
+	int turn_around_time;
+	//The waiting time of the process
+	int waiting_time;
 	//Tracking how often object removed from queue
 	int removed;
 	//Tracking how often added to the queue
 	int added;
 	//constructor
-	PCB(string,int,int);
+	PCB(string, int, int,int, int);
 	
 };
 
@@ -47,7 +51,13 @@ Header and implementation for PCBTable
 PCBTable is an array of PCB object pointers 
 */
 class PCBTable {
- public:
-  PCB* PCBTable[30]; //an array for PCB table, holds 30 pointers 
+	private:
+		int count = 0; //how many processes do we have right now
+	public:
+		PCB* PCBTable[30]; //an array for PCB table, holds 30 pointers
+		int getSize();
+		void add(PCB*);
+		void update(PCB*);
+		void display(); //display the contents of the PCB table 
   
 };

@@ -51,14 +51,15 @@ int main(int argc, char *argv[])
     string line;
     // create PCB table and Ready Queue
     PCBTable table;
-    queue q1;
-    PCB* running_process = new PCB("",0,0);
+    // tableQueue holds the queue to run the processes
+    queue tableQueue;
+    PCB* new_process = new PCB("",0,0,0,0);
+    PCB* running_process = new PCB("",0,0,0,0);;
     int arrive_time = 0;
-    int finish_time = 0;
-    int waiting_time = 0;
+    int previous_finish_time = 0; //holds the previous finished time process.
+    int counter = 0; //how many procceses do we have in the input file
     double sfinish_time = 0;
     double swaiting_time = 0;
-    int count =0;//counter to keep track how many proccesses are in the PCB table
     while(getline(infile, line) ) {
         std::istringstream ss (line);
         // Get the task name
@@ -75,36 +76,35 @@ int main(int argc, char *argv[])
         cout << name << " " << priority << " " << burst << endl;
         // TODO: add the task to the scheduler's ready queue
         // You will need a data structure, i.e. PCB, to represent a task 
-        table.PCBTable[count] = new PCB(name,priority,burst);
-        q1.add(table.PCBTable[count]);
-        count++;
-        
+        new_process = new PCB(name,priority, burst, 0,0);
+        table.add(new_process);
+        tableQueue.add(new_process);
+        counter++;
     }
     //TESTING FOR CORRECT PCBTABLE
-    for(int i = 0; i < count; i++){
+    for(int i = 0; i < table.getSize(); i++){
         cout<<"["<<table.PCBTable[i]->name<<"]  ";
         cout<<"["<<table.PCBTable[i]->priority<<"]  ";
         cout<<"["<<table.PCBTable[i]->burst<<"]  ";
         cout<<endl;
     }
-    q1.displayAll(); //TESTING FOR CORRECT QUEUE
+    tableQueue.displayAll(); //TESTING FOR CORRECT QUEUE
 
 
     // TODO: Add your code to run the scheduler and print out statistics
-    while(!q1.isEmpty()){
-        q1.remove(*running_process);
-        finish_time = finish_time + running_process->burst + arrive_time;
-        waiting_time = finish_time - running_process->burst;
-        cout<<"--------------------"<<endl;
-        cout<<running_process->name<<" turn-around time = ";
-        cout<<finish_time<<", waiting time = ";
-        cout<<waiting_time<<endl;
-        sfinish_time = sfinish_time + finish_time;
-        swaiting_time = swaiting_time + waiting_time;
-        
+    while(!tableQueue.isEmpty()){
+        tableQueue.remove(*running_process);
+        running_process->turn_around_time = running_process->turn_around_time + running_process->burst + arrive_time + previous_finish_time;
+        previous_finish_time = running_process->turn_around_time;
+        running_process->waiting_time = running_process->turn_around_time - running_process->burst;
+        //cout<<"--------------------"<<endl;
+        sfinish_time = sfinish_time + running_process->turn_around_time;
+        swaiting_time = swaiting_time + running_process->waiting_time;
+        table.update(running_process);
     }
-    cout<<"Average turn-around time = " <<sfinish_time/count<<endl;
-    cout<<"Average waiting time = "<<swaiting_time/count<<endl;
+    table.display();
+    cout<<"Average turn-around time = " <<sfinish_time/counter<<endl;
+    cout<<"Average waiting time = "<<swaiting_time/counter<<endl;
     
 
 
