@@ -12,7 +12,7 @@
 
 using namespace std;
 #include <iostream>
-#include "queue.h"  
+#include "ReadyQueue_fcfs.h"  
 
 // constructor 
 queue::queue()

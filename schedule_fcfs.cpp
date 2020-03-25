@@ -16,7 +16,7 @@
 #include <sstream>
 #include <string>
 #include "PCB.h"
-#include "queue.h"
+#include "ReadyQueue_fcfs.h"
 
 using namespace std;
 
