@@ -6,7 +6,6 @@ using namespace std;
 Jason Luu and Zsuzsanna Dianovics
 Assignment 1
 PCB.h
-
 Header file: PCB object
 This object has an enum class representing the process state
 This object needs an ID and a Priority to be created
@@ -47,7 +46,6 @@ public:
 
 /*
 Header and implementation for PCBTable
-
 PCBTable is an array of PCB object pointers 
 */
 class PCBTable {
