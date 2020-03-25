@@ -35,8 +35,7 @@ public:
 	
 	//debugging function to check how often the queue is empty
 	int howOftenEmpty();
-	//sorting the task based on the order of FCFS
-	void sortTask();
+	
 	
 private:
 

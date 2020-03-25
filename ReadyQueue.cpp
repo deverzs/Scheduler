@@ -80,12 +80,9 @@ PCB* ReadyQueue::removeHighest(){
 */
 void ReadyQueue::display(){
   //cout << "Display Processes in Ready Queue:" <<endl;
-  sortTask();
-  for(int i = 0; i<count; i++){
-    cout<<Q[i]->name<<" turn around time = "<<Q[i]->turn_around_time<<", ";
-    cout<<"waiting time = "<<Q[i]->waiting_time<<endl;
+  for(int i = 0; i <= count - 1; i++){
+    cout<<"Proc ID = " <<Q[i]->id <<", priority = " <<Q[i]->priority<<endl;
   }
- 
 }
 
 /* swap: exchange PCB objects
@@ -204,28 +201,4 @@ int ReadyQueue::getLargerchild(int i)
     else return RC;
   }
   else {return RC;}
-}
-//PURPOSE: to sort the task based on the order of FCFS
-//PARAMETER: NONE
-void ReadyQueue::sortTask()
-{
-	string one;
-	string two;
-	int i, j;
-	for (i = 0; i < count - 1; i++)
-	{
-		for (j = 0; j < count - i - 1; j++)
-		{
-			one = Q[j]->name.substr(1);
-			two = Q[j + 1]->name.substr(1);
-			//cout << "subtrings: " << one << " " << two << endl;
-			if (stoi(one)> stoi(two))
-			{
-				swap(j, j + 1);
-			}
-
-		}
-	}
-  		
-  		
 }

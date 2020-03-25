@@ -51,7 +51,12 @@ Header and implementation for PCBTable
 PCBTable is an array of PCB object pointers 
 */
 class PCBTable {
+ private:
+	int count = 0; //how many processes do we have right now
  public:
-  PCB* PCBTable[30]; //an array for PCB table, holds 30 pointers 
+	PCB* PCBTable[30]; //an array for PCB table, holds 30 pointers 
+	int getSize(); //return the size of PCB table
+	void add(PCB*); //add the new process into PCB table
+	void display(); //display the contents of the PCB table  
   
 };

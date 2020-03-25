@@ -59,9 +59,10 @@ int main(int argc, char *argv[])
     ReadyQueue tableQueue; 
     //printQueue holds ran processes for printing info
     ReadyQueue printQueue; 
+    PCB* new_process = new PCB("",0,0,0,0); //holds the new process from the input file
     //running_task holds the processes that has the highest priority
     PCB* running_task = new PCB("",0,0,0,0);
-    int count = 0; //local variable for keeping track of how many processes are in the priority queue
+    int counter = 0; //local variable for keeping track of how many processes do we have in the input file
     int arrive_time = 0; //assumption of all the process arrive at time 0
     int previous_finish_time = 0; //holds the previous finished time process.
     // int finish_time = 0;
@@ -84,15 +85,16 @@ int main(int argc, char *argv[])
         
         cout << name << " " << priority << " " << burst << endl;
         // TODO: add the task to the scheduler's ready queue
-        // You will need a data structure, i.e. PCB, to represent a task 
-        table.PCBTable[count] = new PCB(name,priority,burst,0,0);
-        tableQueue.add(table.PCBTable[count]);
-        count++;
+        // You will need a data structure, i.e. PCB, to represent a task
+        new_process = new PCB(name,priority,burst,0,0); 
+        table.add(new_process);
+        tableQueue.add(new_process);
+        counter++;
     }
         
 
     //TESTING FOR CORRECT PCBTable
-    for(int i = 0; i <count; i++){
+    for(int i = 0; i <table.getSize(); i++){
         cout<<"["<<table.PCBTable[i]->name<<"]  ";
         cout<<"["<<table.PCBTable[i]->priority<<"]  ";
         cout<<"["<<table.PCBTable[i]->burst<<"]  "<<endl;
@@ -117,12 +119,11 @@ int main(int argc, char *argv[])
         running_task->waiting_time = running_task->turn_around_time - running_task->burst;
         sfinish_time = sfinish_time + running_task->turn_around_time;
         swaiting_time = swaiting_time + running_task->waiting_time;
-        printQueue.add(running_task);
     }
-    printQueue.display();
+    table.display();
     
-    cout<<"Average turn-around time = "<<sfinish_time/count<<endl;
-    cout<<"Average waiting time = "<<swaiting_time/count<<endl;
+    cout<<"Average turn-around time = "<<sfinish_time/counter<<endl;
+    cout<<"Average waiting time = "<<swaiting_time/counter<<endl;
     
     return 0;
 }
