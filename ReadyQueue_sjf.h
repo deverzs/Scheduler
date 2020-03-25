@@ -4,7 +4,6 @@
 Jason Luu and Zsuzsanna Dianovics
 Assignment 1
 Header file: ReadyQueue.h
-
 Header file for ReadyQueue object
 This object creats a priority queue that removes objects
 based on the priority of the PCB object
@@ -27,7 +26,7 @@ public:
 	// Returns the number of elements in the queue.
 	int size();
 
-	// Prints the queue contents to standard output.
+	// Prints the queue contents to standard output based on the order of FCFS.
 	void display();
 	
 	//constructor
@@ -36,12 +35,13 @@ public:
 	//debugging function to check how often the queue is empty
 	int howOftenEmpty();
 	
+	
 private:
 
 	//Utility functions for priority queue
 	void swap(int,int);		//swap the objects
 	void reheapify(); 		//re-arrange after remove from the ReadyQueue
-	int getLargerchild(int);//return the location of the smaller child
+	int getSmallerchild(int);//return the location of the smaller child
 	void trickleup(); 		// trickle up after adding at the rear
 	int getParent(int); 	//return the parent location given the child location
 	bool even(int); 		//even or odd?
@@ -49,4 +49,5 @@ private:
 	PCB* Q[30]; 			//an array holding PCB elements.
 	int count; 				//how many elements are in the ReadyQueue
 	int emptyQ;				//number of times queue is empty
+	
 };
