@@ -120,6 +120,7 @@ int main(int argc, char *argv[])
         printQueue.add(running_task);
     }
     printQueue.display();
+    
     cout<<"Average turn-around time = "<<sfinish_time/count<<endl;
     cout<<"Average waiting time = "<<swaiting_time/count<<endl;
     
