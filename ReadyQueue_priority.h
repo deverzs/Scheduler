@@ -41,7 +41,7 @@ private:
 	//Utility functions for priority queue
 	void swap(int,int);		//swap the objects
 	void reheapify(); 		//re-arrange after remove from the ReadyQueue
-	int getSmallerchild(int);//return the location of the smaller child
+	int getLargerchild(int);//return the location of the smaller child
 	void trickleup(); 		// trickle up after adding at the rear
 	int getParent(int); 	//return the parent location given the child location
 	bool even(int); 		//even or odd?
