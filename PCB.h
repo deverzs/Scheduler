@@ -24,13 +24,13 @@ public:
     // The unique process ID
 	unsigned int id;
     // The priority of a process valued between 1-50. Larger number represents higher priority
-	int priority;
+	unsigned int priority;
 	// The current state of the process.
 	// A process in the ReadyQueue should be in READY state
 	ProcState state;
 	//The name of the process
 	string name;
-	//The burst length of the process
+	//The length of burst
 	int burst;
 	//The turn-around time of the process
 	int turn_around_time;
@@ -51,12 +51,11 @@ Header and implementation for PCBTable
 PCBTable is an array of PCB object pointers 
 */
 class PCBTable {
-	private:
-		int count = 0; //how many processes do we have right now
-	public:
-		PCB* PCBTable[30]; //an array for PCB table, holds 30 pointers
-		int getSize(); //return the size of PCB table
-		void add(PCB*); //add the new process into PCB table
-		void display(); //display the contents of the PCB table 
-  
+ private:
+	int count = 0; //how many processes do we have right now
+ public:
+	PCB* PCBTable[30]; //an array for PCB table, holds 30 pointers 
+	int getSize(); //return the size of PCB table
+	void add(PCB*); //add the new process into PCB table
+	void display(); //display the contents of the PCB table 
 };
