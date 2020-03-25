@@ -9,9 +9,12 @@ Implementation file: PCB.cpp
 	@params  id: int the id of the process
 			 priority: int the priority of the process
 */
-PCB::PCB(int id, int priority){
-  this->id = id;
+PCB::PCB(string name, int priority, int burst, int turn_around_time, int waiting_time){
+  this->name = name;
   this->priority = priority;
+  this->burst = burst;
+  this->turn_around_time = turn_around_time;
+  this->waiting_time = waiting_time;
   state = ProcState::NEW;
 }
 

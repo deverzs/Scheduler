@@ -27,7 +27,7 @@ public:
 	// Returns the number of elements in the queue.
 	int size();
 
-	// Prints the queue contents to standard output.
+	// Prints the queue contents to standard output based on the order of FCFS.
 	void display();
 	
 	//constructor
@@ -35,6 +35,8 @@ public:
 	
 	//debugging function to check how often the queue is empty
 	int howOftenEmpty();
+	//sorting the task based on the order of FCFS
+	void sortTask();
 	
 private:
 
@@ -49,4 +51,5 @@ private:
 	PCB* Q[30]; 			//an array holding PCB elements.
 	int count; 				//how many elements are in the ReadyQueue
 	int emptyQ;				//number of times queue is empty
+	
 };

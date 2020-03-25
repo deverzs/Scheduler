@@ -15,8 +15,14 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include "PCB.h"
+#include "ReadyQueue.h"
+
 
 using namespace std;
+template<typename T> void print_queue(T& q, int count) {
+    
+}
 
 int main(int argc, char *argv[])
 {
@@ -47,6 +53,21 @@ int main(int argc, char *argv[])
     // open the input file
     std::ifstream infile(argv[1]);
     string line;
+    // create the table for PCB and ReadyQueue
+    PCBTable table;
+    // tableQueue holds the queue to run the processes
+    ReadyQueue tableQueue; 
+    //printQueue holds ran processes for printing info
+    ReadyQueue printQueue; 
+    //running_task holds the processes that has the highest priority
+    PCB* running_task = new PCB("",0,0,0,0);
+    int count = 0; //local variable for keeping track of how many processes are in the priority queue
+    int arrive_time = 0; //assumption of all the process arrive at time 0
+    int previous_finish_time = 0; //holds the previous finished time process.
+    // int finish_time = 0;
+    // int waiting_time = 0;
+    double sfinish_time = 0;
+    double swaiting_time = 0;
     while(getline(infile, line) ) {
         std::istringstream ss (line);
         // Get the task name
@@ -64,10 +85,43 @@ int main(int argc, char *argv[])
         cout << name << " " << priority << " " << burst << endl;
         // TODO: add the task to the scheduler's ready queue
         // You will need a data structure, i.e. PCB, to represent a task 
+        table.PCBTable[count] = new PCB(name,priority,burst,0,0);
+        tableQueue.add(table.PCBTable[count]);
+        count++;
     }
+        
+
+    //TESTING FOR CORRECT PCBTable
+    for(int i = 0; i <count; i++){
+        cout<<"["<<table.PCBTable[i]->name<<"]  ";
+        cout<<"["<<table.PCBTable[i]->priority<<"]  ";
+        cout<<"["<<table.PCBTable[i]->burst<<"]  "<<endl;
+    }
+    //TESTING FOR CORRECT ReadyQueue
+     //tableQueue.display();
+
+    // running_task = q1.removeHighest();
+    // cout<<"Running task = ["<<running_task->name<<"]   ";
+    // cout<<"["<<running_task->priority<<"]   ";
+    // cout<<"["<<running_task->burst<<"]"<<endl;
 
 
     // TODO: Add your code to run the scheduler and print out statistics
-
+    while(tableQueue.size() != 0){
+        running_task = tableQueue.removeHighest();
+        cout<<"Running task = ["<<running_task->name<<"]   ";
+        cout<<"["<<running_task->priority<<"]   ";
+        cout<<"["<<running_task->burst<<"]   for "<<running_task->burst<<" units"<<endl;
+        running_task->turn_around_time = running_task->turn_around_time + arrive_time + running_task->burst + previous_finish_time;
+        previous_finish_time = running_task->turn_around_time;
+        running_task->waiting_time = running_task->turn_around_time - running_task->burst;
+        sfinish_time = sfinish_time + running_task->turn_around_time;
+        swaiting_time = swaiting_time + running_task->waiting_time;
+        printQueue.add(running_task);
+    }
+    printQueue.display();
+    cout<<"Average turn-around time = "<<sfinish_time/count<<endl;
+    cout<<"Average waiting time = "<<swaiting_time/count<<endl;
+    
     return 0;
 }

@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+using namespace std;
 
 /*
 Jason Luu and Zsuzsanna Dianovics
@@ -26,12 +28,20 @@ public:
 	// The current state of the process.
 	// A process in the ReadyQueue should be in READY state
 	ProcState state;
+	//The name of the process
+	string name;
+	//The length of burst
+	int burst;
+	//The turn-around time of the process
+	int turn_around_time;
+	//The waiting time of the process
+	int waiting_time;
 	//Tracking how often object removed from queue
 	int removed;
 	//Tracking how often added to the queue
 	int added;
 	//constructor
-	PCB(int,int);
+	PCB(string, int, int,int, int);
 	
 };
 

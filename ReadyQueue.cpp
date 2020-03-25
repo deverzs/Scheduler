@@ -58,6 +58,7 @@ int ReadyQueue::howOftenEmpty(){
 	@calls reheapify()
 */
 PCB* ReadyQueue::removeHighest(){
+  PCB* removedElem;
   // if the queue is empty
   if(count<=0){
     emptyQ++;
@@ -65,23 +66,26 @@ PCB* ReadyQueue::removeHighest(){
   }
   else{
     Q[0]->state = ProcState::RUNNING; //change its state to RUNNING when it is removed from ReadyQueue
+    removedElem = Q[0];
     reheapify();
     Q[0]->removed += 1;
-    return Q[0];
+    return removedElem;
   }
  
 }
 
-/* display: to display the current PCB elements
+/* display: to display the printQueue in the order of FCFS
 	@param none
 	@return none
 */
 void ReadyQueue::display(){
-  cout << "Display Processes in Ready Queue:" <<endl;
-  for(int i = 0; i <= count - 1; i++){
-    cout<<"Proc ID = " <<Q[i]->id <<", priority = " <<Q[i]->priority<<endl;
+  //cout << "Display Processes in Ready Queue:" <<endl;
+  sortTask();
+  for(int i = 0; i<count; i++){
+    cout<<Q[i]->name<<" turn around time = "<<Q[i]->turn_around_time<<", ";
+    cout<<"waiting time = "<<Q[i]->waiting_time<<endl;
   }
-  cout<<endl;
+ 
 }
 
 /* swap: exchange PCB objects
@@ -106,11 +110,19 @@ void ReadyQueue::trickleup(){
   int lastElem = count-1; 			//the last elem location
   bool didSwap = true; 				//local variable to determine whether we did swap or not.
   while (lastElem > 0 && didSwap == true){
-    if(Q[lastElem]->priority >= Q[getParent(lastElem)]->priority){
+    if(Q[lastElem]->priority > Q[getParent(lastElem)]->priority){
       swap(getParent(lastElem),lastElem);
+      if(Q[lastElem]->priority == Q[lastElem - 1]->priority){
+        swap(getParent(lastElem)+1,lastElem);
+      }
+      // if(Q[getParent(lastElem)]->priority == Q[getParent(lastElem)+1]->priority){
+      //   swap(getParent(lastElem)+1, getParent(lastElem));
+      // }
       lastElem = getParent(lastElem);
-      
     }
+    
+
+    
     else didSwap = false;
   }
 }
@@ -160,10 +172,10 @@ void ReadyQueue::reheapify()
     {
       Y = getLargerchild(X);
       if (Y != -1 && (Q[X]->priority <= Q[Y]->priority))
-	{
-	  swap(Y,X);
-	  X = Y;
-	}
+        {
+          swap(Y,X);
+          X = Y;
+        }
       else 
 	{didSwap = false;}
     }
@@ -183,5 +195,37 @@ int ReadyQueue::getLargerchild(int i)
     {
       return LC;
     }
+  else if(Q[LC]->priority == Q[RC]->priority)
+  {
+    //determines which child (left or right) to return when they are the same priority based on the order of FCFS. 
+    if(stoi(Q[LC]->name.substr(1)) < stoi(Q[RC]->name.substr(1))){
+      return LC;
+    }
+    else return RC;
+  }
   else {return RC;}
+}
+//PURPOSE: to sort the task based on the order of FCFS
+//PARAMETER: NONE
+void ReadyQueue::sortTask()
+{
+	string one;
+	string two;
+	int i, j;
+	for (i = 0; i < count - 1; i++)
+	{
+		for (j = 0; j < count - i - 1; j++)
+		{
+			one = Q[j]->name.substr(1);
+			two = Q[j + 1]->name.substr(1);
+			//cout << "subtrings: " << one << " " << two << endl;
+			if (stoi(one)> stoi(two))
+			{
+				swap(j, j + 1);
+			}
+
+		}
+	}
+  		
+  		
 }
