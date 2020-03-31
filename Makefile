@@ -13,17 +13,17 @@ OBJ = $(SRCS:.cpp=.o) 	# object files for the target. Add more to this and next 
 
 all : $(PROG) depend
 
-fcfs: schedule_fcfs.o PCB.o
-	$(CC) -o fcfs schedule_fcfs.o PCB.o $(LDFLAGS) $(LIB)
+fcfs: schedule_fcfs.o PCB.o ReadyQueue_fcfs.o
+	$(CC) -o fcfs schedule_fcfs.o PCB.o ReadyQueue_fcfs.o $(LDFLAGS) $(LIB)
 
 rr: schedule_rr.o PCB.o ReadyQueue_rr.o
 	$(CC) -o rr schedule_rr.o PCB.o ReadyQueue_rr.o $(LDFLAGS) $(LIB)
 
-sjf: schedule_sjf.o PCB.o
-	$(CC) -o sjf schedule_sjf.o PCB.o $(LDFLAGS) $(LIB)
+sjf: schedule_sjf.o PCB.o ReadyQueue_sjf.o
+	$(CC) -o sjf schedule_sjf.o PCB.o ReadyQueue_sjf.o $(LDFLAGS) $(LIB)
 
-priority: schedule_priority.o PCB.o
-	$(CC) -o priority schedule_priority.o PCB.o $(LDFLAGS) $(LIB)
+priority: schedule_priority.o PCB.o ReadyQueue_priority.o
+	$(CC) -o priority schedule_priority.o PCB.o ReadyQueue_priority.o $(LDFLAGS) $(LIB)
 
 .cpp.o:
 	$(CC) -c $(CFLAGS) $< -o $@
