@@ -59,9 +59,9 @@ int main(int argc, char *argv[])
     ReadyQueue tableQueue; 
     //printQueue holds ran processes for printing info
     ReadyQueue printQueue; 
-    PCB* new_process = new PCB("",0,0,0,0); //holds the new process from the input file
+    PCB* new_process = new PCB("",0,0,0,0,0); //holds the new process from the input file
     //running_task holds the processes that has the highest priority
-    PCB* running_task = new PCB("",0,0,0,0);
+    PCB* running_task = new PCB("",0,0,0,0,0);
     int counter = 0; //local variable for keeping track of how many processes do we have in the input file
     int arrive_time = 0; //assumption of all the process arrive at time 0
     int previous_finish_time = 0; //holds the previous finished time process.
@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
         cout << name << " " << priority << " " << burst << endl;
         // TODO: add the task to the scheduler's ready queue
         // You will need a data structure, i.e. PCB, to represent a task
-        new_process = new PCB(name,priority,burst,0,0); 
+        new_process = new PCB(name,priority,burst,burst,0,0); 
         table.add(new_process);
         tableQueue.add(new_process);
         counter++;

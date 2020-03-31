@@ -38,10 +38,4 @@ void PCBTable::display(){
       cout<<PCBTable[i]->turn_around_time<<", waiting time = ";
       cout<<PCBTable[i]->waiting_time<<endl;
   }
-<<<<<<< HEAD
 }
-=======
-}
-
-
->>>>>>> master

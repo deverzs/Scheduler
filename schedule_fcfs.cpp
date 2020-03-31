@@ -53,8 +53,8 @@ int main(int argc, char *argv[])
     PCBTable table;
     // tableQueue holds the queue to run the processes
     queue tableQueue;
-    PCB* new_process = new PCB("",0,0,0,0);
-    PCB* running_process = new PCB("",0,0,0,0);;
+    PCB* new_process = new PCB("",0,0,0,0,0);
+    PCB* running_process = new PCB("",0,0,0,0,0);;
     int arrive_time = 0;
     int previous_finish_time = 0; //holds the previous finished time process.
     int counter = 0; //how many procceses do we have in the input file
@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
         cout << name << " " << priority << " " << burst << endl;
         // TODO: add the task to the scheduler's ready queue
         // You will need a data structure, i.e. PCB, to represent a task 
-        new_process = new PCB(name,priority, burst, 0,0);
+        new_process = new PCB(name,priority, burst, burst, 0,0);
         table.add(new_process);
         tableQueue.add(new_process);
         counter++;

@@ -1,6 +1,10 @@
-schedule_fcfs.o: schedule_fcfs.cpp
+schedule_fcfs.o: schedule_fcfs.cpp PCB.h ReadyQueue_fcfs.h
 schedule_rr.o: schedule_rr.cpp PCB.h ReadyQueue_rr.h
-schedule_sjf.o: schedule_sjf.cpp
-schedule_priority.o: schedule_priority.cpp
+schedule_sjf.o: schedule_sjf.cpp PCB.h ReadyQueue_sjf.h
+schedule_priority.o: schedule_priority.cpp PCB.h ReadyQueue_priority.h
 PCB.o: PCB.cpp PCB.h
 ReadyQueue_rr.o: ReadyQueue_rr.cpp ReadyQueue_rr.h PCB.h
+ReadyQueue_fcfs.o: ReadyQueue_fcfs.cpp ReadyQueue_fcfs.h PCB.h
+ReadyQueue_priority.o: ReadyQueue_priority.cpp ReadyQueue_priority.h \
+  PCB.h
+ReadyQueue_sjf.o: ReadyQueue_sjf.cpp ReadyQueue_sjf.h PCB.h
