@@ -15,6 +15,8 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include "PCB.h"
+#include "ReadyQueue_rr.h"
 
 using namespace std;
 
@@ -47,6 +49,17 @@ int main(int argc, char *argv[])
     // open the input file
     std::ifstream infile(argv[1]);
     string line;
+    // create PCB table and Ready Queue
+    PCBTable table;
+    // tableQueue holds the queue to run the processes
+    queue tableQueue;
+    PCB* new_process = new PCB("",0,0,0,0,0);
+    PCB* running_process = new PCB("",0,0,0,0,0);;
+    int arrive_time = 0;
+    int previous_finish_time = 0; //holds the previous finished time process.
+    int counter = 0; //how many procceses do we have in the input file
+    double sfinish_time = 0;
+    double swaiting_time = 0;
     while(getline(infile, line) ) {
         std::istringstream ss (line);
         // Get the task name
@@ -60,14 +73,57 @@ int main(int argc, char *argv[])
         // Get the task burst length 
         getline(ss, token, ',');
         burst = std::stoi(token);
-        
         cout << name << " " << priority << " " << burst << endl;
         // TODO: add the task to the scheduler's ready queue
         // You will need a data structure, i.e. PCB, to represent a task 
+        new_process = new PCB(name,priority, burst, burst,0,0);
+        table.add(new_process);
+        tableQueue.add(new_process);
+        counter++;
     }
+    //TESTING FOR CORRECT PCBTABLE
+    for(int i = 0; i < table.getSize(); i++){
+        cout<<"["<<table.PCBTable[i]->name<<"]  ";
+        cout<<"["<<table.PCBTable[i]->priority<<"]  ";
+        cout<<"["<<table.PCBTable[i]->burst<<"]  ";
+        cout<<endl;
+    }
+    //tableQueue.displayAll(); //TESTING FOR CORRECT QUEUE
 
 
     // TODO: Add your code to run the scheduler and print out statistics
+    while(!tableQueue.isEmpty()){
+        running_process = tableQueue.remove();
+        cout<<"Running task = ["<<running_process->name<<"] [";
+        cout<<running_process->priority<<"] [";
+        cout<<running_process->burst_left<<"] for ";
+        if(running_process->burst_left > QUANTUM){
+            running_process->burst_left = running_process->burst_left - QUANTUM;
+            //running_process->waiting_time = running_process->waiting_time + QUANTUM;
+            tableQueue.add(running_process);
+            previous_finish_time = previous_finish_time + QUANTUM;
+            cout<<QUANTUM<<" units"<<endl;
+            continue;
+        }
+        else
+        {
+            running_process->turn_around_time = running_process->turn_around_time + running_process->burst_left + arrive_time + previous_finish_time;
+            previous_finish_time = running_process->turn_around_time;
+            running_process->waiting_time = running_process->turn_around_time - running_process->burst;
+            cout<<running_process->burst_left<<" units"<<endl;
+            cout<<"Task "<<running_process->name<<" is finished."<<endl;
+        }
+        
+        
+        //cout<<"--------------------"<<endl;
+        sfinish_time = sfinish_time + running_process->turn_around_time;
+        swaiting_time = swaiting_time + running_process->waiting_time;
+    }
+    table.display();
+    cout<<"Average turn-around time = " <<sfinish_time/counter<<endl;
+    cout<<"Average waiting time = "<<swaiting_time/counter<<endl;
+    
+
 
     return 0;
 }
