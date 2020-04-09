@@ -1,14 +1,11 @@
-//INSTRUCTION:
-//Look for ** using control-S
-//Then, fill in the function body
-//When done, compile queue.cpp to make sure it has no syntax errors
-
-//=========================================================
-//HW#: HW1P2 queue
-//Your name: Trong Luu
-//Complier:  g++
-//File type: queue implementation file  queue.cpp
-//===========================================================
+/*
+Jason Luu and Zsuzsanna Dianovics
+Assignment 3
+Implementation file: ReadyQueue_fcfs.cpp
+Implementation file for queue object
+This object creates a first come first serve queue that removes objects
+based on the first come first serve of the PCB object
+*/
 
 using namespace std;
 #include <iostream>

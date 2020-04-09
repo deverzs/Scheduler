@@ -27,11 +27,16 @@ template<typename T> void print_queue(T& q, int count) {
 int main(int argc, char *argv[])
 {
     std::cout << "CS 433 Programming assignment 3" << std::endl;
-    std::cout << "Author: xxxxxx and xxxxxxx" << std::endl;
-    std::cout << "Date: xx/xx/20xx" << std::endl;
-    std::cout << "Course: CS433 (Operating Systems)" << std::endl;
-    std::cout << "Description : **** " << std::endl;
-    std::cout << "=================================" << std::endl;
+	std::cout << "Author: Jason Luu and Zsuzsanna Dinaovics" << std::endl;
+	std::cout << "Date: 04/09/2020" << std::endl;
+	std::cout << "Course: CS433 (Operating Systems)" << std::endl;
+	std::cout << "Description: Priority CPU Scheduler" << std::endl;
+    std::cout << "	First, read the input file that provided from the command line." << std::endl;
+	std::cout << "	Uses the priority queue to store the tasks based on the priority number(The highest number is the highest priority)." << std::endl;
+	std::cout << "	Then, the scheduler will schedule the highest priority to run first." << std::endl;
+    std::cout << "	Then, it will calculate the turn-around and waiting time when the task is finished." << std::endl;
+    std::cout << "	Finally, it will calculate the average turn-around and waiting time." << std::endl;
+	std::cout << "=======================================================" << std::endl;
     
     int QUANTUM = 10;
     // Check that input file is provided at command line
@@ -65,10 +70,8 @@ int main(int argc, char *argv[])
     int counter = 0; //local variable for keeping track of how many processes do we have in the input file
     int arrive_time = 0; //assumption of all the process arrive at time 0
     int previous_finish_time = 0; //holds the previous finished time process.
-    // int finish_time = 0;
-    // int waiting_time = 0;
-    double sfinish_time = 0;
-    double swaiting_time = 0;
+    double sfinish_time = 0; //holds the sum of the finished time
+    double swaiting_time = 0; //holds the sum of the waiting time
     while(getline(infile, line) ) {
         std::istringstream ss (line);
         // Get the task name
@@ -99,16 +102,7 @@ int main(int argc, char *argv[])
         cout<<"["<<table.PCBTable[i]->priority<<"]  ";
         cout<<"["<<table.PCBTable[i]->burst<<"]  "<<endl;
     }
-    //TESTING FOR CORRECT ReadyQueue
-     //tableQueue.display();
-
-    // running_task = q1.removeHighest();
-    // cout<<"Running task = ["<<running_task->name<<"]   ";
-    // cout<<"["<<running_task->priority<<"]   ";
-    // cout<<"["<<running_task->burst<<"]"<<endl;
-
-
-    // TODO: Add your code to run the scheduler and print out statistics
+    // CODE TO RUN PRIORITY CPU SCHEDULER
     while(tableQueue.size() != 0){
         running_task = tableQueue.removeHighest();
         cout<<"Running task = ["<<running_task->name<<"]   ";
@@ -120,10 +114,10 @@ int main(int argc, char *argv[])
         sfinish_time = sfinish_time + running_task->turn_around_time;
         swaiting_time = swaiting_time + running_task->waiting_time;
     }
+    //PRINT OUT THE STATISTICS OF EACH TASK IN THE PCB TABLE
     table.display();
-    
+    //PRINT OUT THE AVERAGE OF TURN-AROUND AND WAITING TIME
     cout<<"Average turn-around time = "<<sfinish_time/counter<<endl;
     cout<<"Average waiting time = "<<swaiting_time/counter<<endl;
-    
     return 0;
 }

@@ -23,11 +23,15 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     std::cout << "CS 433 Programming assignment 3" << std::endl;
-    std::cout << "Author: xxxxxx and xxxxxxx" << std::endl;
-    std::cout << "Date: xx/xx/20xx" << std::endl;
-    std::cout << "Course: CS433 (Operating Systems)" << std::endl;
-    std::cout << "Description : **** " << std::endl;
-    std::cout << "=================================" << std::endl;
+	std::cout << "Author: Jason Luu and Zsuzsanna Dinaovics" << std::endl;
+	std::cout << "Date: 04/09/2020" << std::endl;
+	std::cout << "Course: CS433 (Operating Systems)" << std::endl;
+	std::cout << "Description: First Come First Serve CPU Scheduler" << std::endl;
+    std::cout << "	First, read the input file that provided from the command line." << std::endl;
+	std::cout << "	Uses the first come first serve queue to store the tasks." << std::endl;
+	std::cout << "	Then, remove from the queue based on first come first serve order and calculate each waiting and turn-around time's task." << std::endl;
+    std::cout << "	Finally, calculate the average waiting and turn-around time." << std::endl;
+	std::cout << "=======================================================" << std::endl;
     
     int QUANTUM = 10;
     // Check that input file is provided at command line
@@ -58,8 +62,8 @@ int main(int argc, char *argv[])
     int arrive_time = 0;
     int previous_finish_time = 0; //holds the previous finished time process.
     int counter = 0; //how many procceses do we have in the input file
-    double sfinish_time = 0;
-    double swaiting_time = 0;
+    double sfinish_time = 0; //holds the sum of the finished time
+    double swaiting_time = 0; //holds the sum of the waiting time
     while(getline(infile, line) ) {
         std::istringstream ss (line);
         // Get the task name
@@ -91,21 +95,19 @@ int main(int argc, char *argv[])
     tableQueue.displayAll(); //TESTING FOR CORRECT QUEUE
 
 
-    // TODO: Add your code to run the scheduler and print out statistics
+    // CODE TO RUN THE FCFS CPU SCHEDULER
     while(!tableQueue.isEmpty()){
         running_process = tableQueue.remove();
         running_process->turn_around_time = running_process->turn_around_time + running_process->burst + arrive_time + previous_finish_time;
         previous_finish_time = running_process->turn_around_time;
         running_process->waiting_time = running_process->turn_around_time - running_process->burst;
-        //cout<<"--------------------"<<endl;
         sfinish_time = sfinish_time + running_process->turn_around_time;
         swaiting_time = swaiting_time + running_process->waiting_time;
     }
+    //PRINT OUT THE STATISTICS OF EACH TASK IN THE PCB TABLE
     table.display();
+    //PRINT OUT THE AVERAGE WAITING AND TURN-AROUND TIME
     cout<<"Average turn-around time = " <<sfinish_time/counter<<endl;
     cout<<"Average waiting time = "<<swaiting_time/counter<<endl;
-    
-
-
     return 0;
 }

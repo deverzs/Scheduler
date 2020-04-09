@@ -1,14 +1,15 @@
-//CS311 Yoshii
-//INSTRUCTION:
-// QUEUE class - header file template based on Notes-2A
-// Look for ** and complete them 
-
-// =====================================================
-// HW#: HW1P2 queue
-// Your name: Trong Luu
-// Compiler:  g++ compiler
-// File type: queue header file queue.h
-//=====================================================
+/*
+Jason Luu and Zsuzsanna Dianovics
+Assignment 3
+Header file: ReadyQueue_rr.h
+Header file for queue object
+This object creates a first come first queue that removes objects
+based on the first come first serve order.
+*/
+/**
+ * queue is a queue of PCB's that are in the READY state to be scheduled to run.
+ * It should be a regular queue here such that the process that come first can be selected first.
+ */
 
 using namespace std;
 #include<string>

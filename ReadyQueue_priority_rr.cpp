@@ -1,12 +1,12 @@
 #include <iostream>
-#include "ReadyQueue_priority.h"
+#include "ReadyQueue_priority_rr.h"
 
 /*
 Jason Luu and Zsuzsanna Dianovics
 Assignment 3
-Implementation file: ReadyQueue_priority.cpp
+Implementation file: ReadyQueue_priority_rr.cpp
 Implementation file for ReadyQueue object
-This object creates a priority queue that removes objects
+This object creats a priority queue that removes objects
 based on the priority of the PCB object
 */
 
@@ -116,10 +116,14 @@ void ReadyQueue::trickleup(){
       // }
       lastElem = getParent(lastElem);
     }
+    else if (Q[lastElem]->priority == Q[getParent(lastElem)]->priority){
+      Q[lastElem]->isEqual = true;
+      Q[getParent(lastElem)]->isEqual = true;
+      didSwap = false;
+    }
     
-
-    
-    else didSwap = false;
+    else 
+    {didSwap = false;}
   }
 }
 
@@ -167,11 +171,17 @@ void ReadyQueue::reheapify()
   while (X < count - 1 && didSwap == true)
     {
       Y = getLargerchild(X);
-      if (Y != -1 && (Q[X]->priority <= Q[Y]->priority))
+      if (Y != -1 && (Q[X]->priority < Q[Y]->priority))
         {
           swap(Y,X);
           X = Y;
         }
+      else if (Y != -1 && (Q[X]->priority = Q[Y]->priority)){
+        Q[X]->isEqual = true;
+        Q[Y]->isEqual = true;
+        swap(Y,X);
+        X = Y;
+      }
       else 
 	      {didSwap = false;}
     }
@@ -193,6 +203,8 @@ int ReadyQueue::getLargerchild(int i)
     }
   else if(Q[LC]->priority == Q[RC]->priority)
   {
+    Q[LC]->isEqual = true;
+    Q[RC]->isEqual = true;
     //determines which child (left or right) to return when they are the same priority based on the order of FCFS. 
     if(stoi(Q[LC]->name.substr(1)) < stoi(Q[RC]->name.substr(1))){
       return LC;
@@ -200,4 +212,10 @@ int ReadyQueue::getLargerchild(int i)
     else return RC;
   }
   else {return RC;}
+}
+
+//Check the front element in the queue AFTER reheapifying
+PCB* ReadyQueue::checkFront(){
+  return Q[0];
+  
 }

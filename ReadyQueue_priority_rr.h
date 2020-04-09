@@ -3,9 +3,9 @@
 /*
 Jason Luu and Zsuzsanna Dianovics
 Assignment 3
-Header file: ReadyQueue_priority.h
+Header file: ReadyQueue_priority_rr.h
 Header file for ReadyQueue object
-This object creates a priority queue that removes objects
+This object creats a priority queue that removes objects
 based on the priority of the PCB object
 */
 
@@ -56,4 +56,3 @@ private:
 	int emptyQ;				//number of times queue is empty
 	
 };
-

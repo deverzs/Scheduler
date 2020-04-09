@@ -41,6 +41,8 @@ public:
 	int removed;
 	//Tracking how often added to the queue
 	int added;
+	//to check if they are the same priority
+	bool isEqual;
 	//constructor
 	PCB(string, int, int,int, int, int);
 	
@@ -57,7 +59,5 @@ class PCBTable {
 	PCB* PCBTable[30]; //an array for PCB table, holds 30 pointers 
 	int getSize(); //return the size of PCB table
 	void add(PCB*); //add the new process into PCB table
-	void display(); //display the contents of the PCB table 
-	
-  
+	void display(); //display the statistics of each process in the PCB table 
 };

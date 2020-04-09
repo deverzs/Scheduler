@@ -3,11 +3,11 @@
 
 /*
 Jason Luu and Zsuzsanna Dianovics
-Assignment 1
-Implementation file: ReadyQueue.cpp
+Assignment 3
+Implementation file: ReadyQueue_sjf.cpp
 Implementation file for ReadyQueue object
-This object creats a priority queue that removes objects
-based on the priority of the PCB object
+This object creates a shortest job first queue that removes objects
+based on the burst time of the task in the PCB object.
 */
 
 using namespace std;

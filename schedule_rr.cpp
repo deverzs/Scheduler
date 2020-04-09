@@ -23,11 +23,20 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     std::cout << "CS 433 Programming assignment 3" << std::endl;
-    std::cout << "Author: xxxxxx and xxxxxxx" << std::endl;
-    std::cout << "Date: xx/xx/20xx" << std::endl;
-    std::cout << "Course: CS433 (Operating Systems)" << std::endl;
-    std::cout << "Description : **** " << std::endl;
-    std::cout << "=================================" << std::endl;
+	std::cout << "Author: Jason Luu and Zsuzsanna Dinaovics" << std::endl;
+	std::cout << "Date: 04/09/2020" << std::endl;
+	std::cout << "Course: CS433 (Operating Systems)" << std::endl;
+	std::cout << "Description: Round Robin CPU Scheduler" << std::endl;
+    std::cout << "	First, read the input file and value for quantum time that provided from the command line." << std::endl;
+    std::cout << "	If the user does not provide any quantum time, the default will be 10." << std::endl;
+	std::cout << "	Uses the regular queue to store the tasks based on first come first serve order." << std::endl;
+	std::cout << "	Then, the scheduler will schedule the task that came first to run." << std::endl;
+    std::cout << "	If the task has the burst time that longer than quantum time, then it will run for the amount of quantum time." << std::endl;
+    std::cout << "	Then, it will put the task with the remaining time back to the queue and schedule the next task to run until the queue is empty." << std::endl;
+    std::cout << "	If the task's burst time is less than or equal to quantum time, then it will let the task finish and calculate the turn-around " << std::endl;
+    std::cout << "	and waiting time. Then, it will schedule the next one to run until the queue is empty." << std::endl;
+    std::cout << "	Finally, it will calculate the average turn-around and waiting time." << std::endl;
+	std::cout << "=======================================================" << std::endl;
     
     int QUANTUM = 10;
     // Check that input file is provided at command line
@@ -58,8 +67,8 @@ int main(int argc, char *argv[])
     int arrive_time = 0;
     int previous_finish_time = 0; //holds the previous finished time process.
     int counter = 0; //how many procceses do we have in the input file
-    double sfinish_time = 0;
-    double swaiting_time = 0;
+    double sfinish_time = 0; //holds the sum of finished time
+    double swaiting_time = 0;//holds the sum of waiting time
     while(getline(infile, line) ) {
         std::istringstream ss (line);
         // Get the task name
@@ -88,10 +97,8 @@ int main(int argc, char *argv[])
         cout<<"["<<table.PCBTable[i]->burst<<"]  ";
         cout<<endl;
     }
-    //tableQueue.displayAll(); //TESTING FOR CORRECT QUEUE
-
-
-    // TODO: Add your code to run the scheduler and print out statistics
+    
+    // CODE TO RUN THE ROUND ROBIN CPU SCHEDULER
     while(!tableQueue.isEmpty()){
         running_process = tableQueue.remove();
         cout<<"Running task = ["<<running_process->name<<"] [";
@@ -99,7 +106,6 @@ int main(int argc, char *argv[])
         cout<<running_process->burst_left<<"] for ";
         if(running_process->burst_left > QUANTUM){
             running_process->burst_left = running_process->burst_left - QUANTUM;
-            //running_process->waiting_time = running_process->waiting_time + QUANTUM;
             tableQueue.add(running_process);
             previous_finish_time = previous_finish_time + QUANTUM;
             cout<<QUANTUM<<" units"<<endl;
@@ -113,17 +119,13 @@ int main(int argc, char *argv[])
             cout<<running_process->burst_left<<" units"<<endl;
             cout<<"Task "<<running_process->name<<" is finished."<<endl;
         }
-        
-        
-        //cout<<"--------------------"<<endl;
         sfinish_time = sfinish_time + running_process->turn_around_time;
         swaiting_time = swaiting_time + running_process->waiting_time;
     }
+    //PRINT OUT THE STATISTICS OF EACH TASK IN THE PCB TABLE
     table.display();
+    //PRINT OUT THE AVERAGE OF TURN-AROUND AND WAITING TIME
     cout<<"Average turn-around time = " <<sfinish_time/counter<<endl;
     cout<<"Average waiting time = "<<swaiting_time/counter<<endl;
-    
-
-
     return 0;
 }

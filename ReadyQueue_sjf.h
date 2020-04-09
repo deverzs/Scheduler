@@ -2,17 +2,17 @@
 #include "PCB.h"
 /*
 Jason Luu and Zsuzsanna Dianovics
-Assignment 1
-Header file: ReadyQueue.h
+Assignment 3
+Header file: ReadyQueue_sjf.h
 Header file for ReadyQueue object
-This object creats a priority queue that removes objects
-based on the priority of the PCB object
+This object creates a shortest job first queue that removes objects
+based on the burst time of the task in the PCB object.
 */
 
 /**
  * ReadyQueue is a queue of PCB's that are in the READY state to be scheduled to run.
- * It should be a priority queue here uch that the process with the highest priority
- * can be selected next.
+ * It should be a shortest job queue here such that the process with the shortest burst time
+ * can be selected first.
  */
 class ReadyQueue {
 public:
