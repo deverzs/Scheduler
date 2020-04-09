@@ -21,42 +21,17 @@
 
 
 using namespace std;
-
-void rrQueue(PCB* running_task, queue tempQueue, double sfinish_time, double swaiting_time, int QUANTUM, int arrive_time, int previous_finish_time){
-    while(!tempQueue.isEmpty()){
-                    running_task = tempQueue.remove();
-                    cout<<"Running task = ["<<running_task->name<<"]   ";
-                    cout<<"["<<running_task->priority<<"]   ";
-                    cout<<"["<<running_task->burst_left<<"]   for ";
-                    if(running_task->burst_left > QUANTUM){
-                        running_task->burst_left = running_task->burst_left - QUANTUM;
-                        //running_process->waiting_time = running_process->waiting_time + QUANTUM;
-                        tempQueue.add(running_task);
-                        previous_finish_time = previous_finish_time + QUANTUM;
-                        cout<<QUANTUM<<" units"<<endl;
-                        continue;
-                    }
-                    else{
-                        running_task->turn_around_time = running_task->turn_around_time + arrive_time + running_task->burst_left + previous_finish_time;
-                        previous_finish_time = running_task->turn_around_time;
-                        running_task->waiting_time = running_task->turn_around_time - running_task->burst;
-                        cout<<running_task->burst_left<<" units"<<endl;
-                        cout<<"Task "<<running_task->name<<" is finished."<<endl;
-                        sfinish_time = sfinish_time + running_task->turn_around_time;
-                        swaiting_time = swaiting_time + running_task->waiting_time;
-                    }
-                }
-}
-
-
 int main(int argc, char *argv[])
 {
     std::cout << "CS 433 Programming assignment 3" << std::endl;
-    std::cout << "Author: xxxxxx and xxxxxxx" << std::endl;
-    std::cout << "Date: xx/xx/20xx" << std::endl;
-    std::cout << "Course: CS433 (Operating Systems)" << std::endl;
-    std::cout << "Description : **** " << std::endl;
-    std::cout << "=================================" << std::endl;
+	std::cout << "Author: Jason Luu and Zsuzsanna Dinaovics" << std::endl;
+	std::cout << "Date: 04/09/2020" << std::endl;
+	std::cout << "Course: CS433 (Operating Systems)" << std::endl;
+	std::cout << "Description: Priority based with Round Robin (EXTRA CREDIT)" << std::endl;
+	std::cout << "	Uses the priority queue to store the tasks based on the priority (The highest number is the highest priority)." << std::endl;
+	std::cout << "	If there are two or more tasks that have the same priority, we will do the Round-Robin scheduling alogorithm for those tasks." << std::endl;
+    std::cout << "	Otherwise, the task will run as priority scheduler." << std::endl;
+	std::cout << "=======================================================" << std::endl;
     
     int QUANTUM = 10;
     // Check that input file is provided at command line
@@ -93,8 +68,6 @@ int main(int argc, char *argv[])
     int counter = 0; //local variable for keeping track of how many processes do we have in the input file
     int arrive_time = 0; //assumption of all the process arrive at time 0
     int previous_finish_time = 0; //holds the previous finished time process.
-    // int finish_time = 0;
-    // int waiting_time = 0;
     double sfinish_time = 0;
     double swaiting_time = 0;
     while(getline(infile, line) ) {
@@ -127,16 +100,7 @@ int main(int argc, char *argv[])
         cout<<"["<<table.PCBTable[i]->priority<<"]  ";
         cout<<"["<<table.PCBTable[i]->burst<<"]  "<<endl;
     }
-    //TESTING FOR CORRECT ReadyQueue
-        tableQueue.display();
-
-    // running_task = q1.removeHighest();
-    // cout<<"Running task = ["<<running_task->name<<"]   ";
-    // cout<<"["<<running_task->priority<<"]   ";
-    // cout<<"["<<running_task->burst<<"]"<<endl;
-
-
-    // TODO: Add your code to run the scheduler and print out statistics
+    // CODE TO RUN THE PRIORITY BASED ROUND ROBIN SCHEDULLING ALGORITHM
     while(tableQueue.size() != 0){
         running_task = tableQueue.removeHighest();
         next_task = tableQueue.checkFront();
@@ -144,29 +108,26 @@ int main(int argc, char *argv[])
         cout<<"["<<running_task->priority<<"]   ";
         cout<<"["<<running_task->burst_left<<"]   for ";
         
-        if(running_task->isEqual){
-            if(running_task->burst_left > QUANTUM && running_task->priority == next_task->priority){
+        if(running_task->isEqual){ //check whether the task has any same priority with the other tasks.
+            if(running_task->burst_left > QUANTUM && running_task->priority == next_task->priority){ //check if the current task has the same priority as the next task and it has the burst time greater than QUANTUMM time.
                 running_task->burst_left = running_task->burst_left - QUANTUM;
-                //running_process->waiting_time = running_process->waiting_time + QUANTUM;
-                tempQueue.add(running_task);
-                previous_finish_time = previous_finish_time + QUANTUM;
-                cout<<QUANTUM<<" units@@"<<endl;
-                continue;
-            }
-            else if (running_task->burst_left > QUANTUM && ((running_task->priority != next_task->priority) || (tableQueue.size() == 0))){
-                running_task->burst_left = running_task->burst_left - QUANTUM;
-                //running_process->waiting_time = running_process->waiting_time + QUANTUM;
                 tempQueue.add(running_task);
                 previous_finish_time = previous_finish_time + QUANTUM;
                 cout<<QUANTUM<<" units"<<endl;
-                while(!tempQueue.isEmpty()){
+                continue;
+            }
+            else if (running_task->burst_left > QUANTUM && running_task->priority != next_task->priority){ //the case when the current task does not have the same priority as the next task
+                running_task->burst_left = running_task->burst_left - QUANTUM;
+                tempQueue.add(running_task);
+                previous_finish_time = previous_finish_time + QUANTUM;
+                cout<<QUANTUM<<" units"<<endl;
+                while(!tempQueue.isEmpty()){ //time to run the tasks that are in the Round-Robin Queue that have all the same priority
                     running_task = tempQueue.remove();
                     cout<<"Running task = ["<<running_task->name<<"]   ";
                     cout<<"["<<running_task->priority<<"]   ";
                     cout<<"["<<running_task->burst_left<<"]   for ";
                     if(running_task->burst_left > QUANTUM){
                         running_task->burst_left = running_task->burst_left - QUANTUM;
-                        //running_process->waiting_time = running_process->waiting_time + QUANTUM;
                         tempQueue.add(running_task);
                         previous_finish_time = previous_finish_time + QUANTUM;
                         cout<<QUANTUM<<" units"<<endl;
@@ -183,7 +144,7 @@ int main(int argc, char *argv[])
                     }
                 }
             }
-            else
+            else //case when the task's burst time <= QUANTUMM
             {
                 running_task->turn_around_time = running_task->turn_around_time + arrive_time + running_task->burst_left + previous_finish_time;
                 previous_finish_time = running_task->turn_around_time;
@@ -194,7 +155,7 @@ int main(int argc, char *argv[])
                 swaiting_time = swaiting_time + running_task->waiting_time;
             }
         }
-        else
+        else //case when the task has a unique priority
         {
             running_task->turn_around_time = running_task->turn_around_time + arrive_time + running_task->burst_left + previous_finish_time;
             previous_finish_time = running_task->turn_around_time;
@@ -205,7 +166,7 @@ int main(int argc, char *argv[])
             swaiting_time = swaiting_time + running_task->waiting_time;
         }    
     }
-    while(!tempQueue.isEmpty()){
+    while(!tempQueue.isEmpty()){ //SPECIFIC CASE WHEN ALL THE TASKS HAVE THE SAME PRIORITY
                     running_task = tempQueue.remove();
                     cout<<"Running task = ["<<running_task->name<<"]   ";
                     cout<<"["<<running_task->priority<<"]   ";
@@ -228,8 +189,8 @@ int main(int argc, char *argv[])
                         swaiting_time = swaiting_time + running_task->waiting_time;
                     }
                 }
+    //PRINT OUT THE STATISTICS FOR EACH TASK AND THE AVERAGE OF WAITIING AND TURN-AROUND TIME
     table.display();
-    
     cout<<"Average turn-around time = "<<sfinish_time/counter<<endl;
     cout<<"Average waiting time = "<<swaiting_time/counter<<endl;
     
